@@ -9,9 +9,6 @@
 <meta property="og:description" content="An easy-to-use website for producing single-line plaintext versions of linked tweets.">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function() {
- $('#urlfield').select();
-});
 function getTweet(url) {
  $('#outputbox').val("Loading...");
  var id = url.split("/").pop();
@@ -21,14 +18,13 @@ function getTweet(url) {
 </script>
 <title>Pastable Tweets</title>
 </head>
-<body>
+<body onLoad="$('#urlfield').select();">
 <h3>Pastable Tweets!</h3>
 <a href="https://github.com/blha303/PastableTweets"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<b>We're testing something right now, please bear with us.</b>
 <p>Paste a direct link to a tweet in the box, hit Enter, then copy the text from the text area below it.<br>
 We accept links in the form https://twitter.com/username/status/longlineofnumbers or even just the number at the end.<br>
 If you have any questions about this free service, please tweet at <a href="https://twitter.com/blha303">@blha303</a> or email <a href="mailto:pastabletweets@blha303.com.au">pastabletweets@blha303.com.au</a></p>
-<form method="GET" action="gettweet.php" id="form" onSubmit="getTweet($("#urlfield").val()); return false;">
+<form method="GET" onSubmit="getTweet(document.getElementById('urlfield').value); return false;">
 <input type="text" value="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size=67><br>
 <input type="submit">
 </form>
