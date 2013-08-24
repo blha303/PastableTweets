@@ -1,5 +1,9 @@
 <?php
 
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die("No URL provided!");
+}
+
 function get_isgd_url($url)  
 {  
 	//get content
@@ -16,20 +20,18 @@ function get_isgd_url($url)
 }
 
 require_once('TwitterAPIExchange.php');
+
 include('config.php');
+if (!isset($oauth_access_token) || !isset($oauth_access_token_secret) || 
+    !isset($consumer_key) || !isset($consumer_key)) {
+    die("No config.php");
+}
 $settings = array(
     'oauth_access_token' => $oauth_access_token,
     'oauth_access_token_secret' => $oauth_access_token_secret,
     'consumer_key' => $consumer_key,
     'consumer_secret' => $consumer_secret
 );
-if (empty($settings)) {
-    die("No config.php");
-}
-
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    die("No URL provided!");
-}
 
 $twitter = new TwitterAPIExchange($settings);
 
