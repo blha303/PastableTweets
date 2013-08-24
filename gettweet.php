@@ -60,7 +60,7 @@ if (is_numeric($_GET['id'])) {
     }
 } else {
     $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-    $getfield = '?count=1&screen_name='.$screenname;
+    $getfield = '?count=1&screen_name='.$_GET['id'];
     $requestMethod = 'GET';
 
     $response = $twitter->setGetfield($getfield)
