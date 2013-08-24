@@ -12,5 +12,5 @@ I ask that you [email me](mailto:pastabletweets@blha303.com.au) if you're making
 Credits
 -------
 
-* *lol768* - CSS
-* *[SubtlePatterns.com](http://subtlepatterns.com)* - cream_pixels.png background
+* **lol768** - CSS
+* **[SubtlePatterns.com](http://subtlepatterns.com)** - cream_pixels.png background
