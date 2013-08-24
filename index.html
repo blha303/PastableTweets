@@ -2,6 +2,7 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="main.css">
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <meta property="og:title" content="PastableTweets">
 <meta property="og:image" content="http://blha303.com.au/blha303.png">
@@ -18,16 +19,20 @@ function getTweet(url) {
 </script>
 <title>Pastable Tweets</title>
 </head>
-<body onLoad="$('#urlfield').select();">
-<h3>Pastable Tweets!</h3>
-<a href="https://github.com/blha303/PastableTweets"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<p>Paste a direct link to a tweet in the box, hit Enter, then copy the text from the text area below it.<br>
-We accept links in the form https://twitter.com/username/status/longlineofnumbers or even just the number at the end.<br>
+<body onload="$('#urlfield').select();"><a href="https://github.com/blha303/PastableTweets"><img alt="Fork me on GitHub" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" style="position: absolute; top: 0; right: 0; border: 0;"></a>
+<div id="container">
+<h1>Pastable Tweets!</h1>
+<p>Paste a direct link to a tweet in the box, hit Enter, then copy the text from the text area below it. 
+We accept links in the form <b>https://twitter.com/username/status/numbers</b> or even just the number at the end.<br>
 If you have any questions about this free service, please tweet at <a href="https://twitter.com/blha303">@blha303</a> or email <a href="mailto:pastabletweets@blha303.com.au">pastabletweets@blha303.com.au</a></p>
-<form method="GET" onSubmit="getTweet(document.getElementById('urlfield').value); return false;">
-<input type="text" value="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size=67><br>
-<input type="submit">
-</form>
-<textarea id="outputbox" style="font-style: normal;" wrap="soft" cols="80" rows="6"></textarea>
-</body>
-</html>
+
+<form method="GET" onsubmit="getTweet(document.getElementById('urlfield').value); return false;" action="gettweet.php">
+<input type="text" value="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size="67"> 
+<input type="submit" class="button button-green" value="Get tweet">
+</form><br>
+<textarea readonly="readonly" id="outputbox" style="font-style: normal;" wrap="soft" cols="72" rows="6"></textarea>
+
+
+</div>
+
+</body></html>
