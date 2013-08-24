@@ -7,7 +7,7 @@ Use from other applications
 ---------------------------
 `PATH_TO_PASTABLE_TWEETS/gettweet.php?id=TWEET_ID`
 
-I ask that you [email me](mailto:pastabletweets@blha303.com.au) if you're making calls to [my own hosted PastableTweets setup](http://blha303.com.au/pastabletweets) in your application. :)
+I ask that you [email me](mailto:pastabletweets@blha303.com.au) if you're making calls to [my own hosted PastableTweets setup](http://pastabletweets.pw) in your application. :)
 
 Credits
 -------
