@@ -19,6 +19,34 @@ function get_isgd_url($url)
 	return $content;  
 }
 
+function time_elapsed_string($ptime)
+{
+    $etime = time() - $ptime;
+
+    if ($etime < 1)
+    {
+        return '0 seconds';
+    }
+
+    $a = array( 12 * 30 * 24 * 60 * 60  =>  'year',
+                30 * 24 * 60 * 60       =>  'month',
+                24 * 60 * 60            =>  'day',
+                60 * 60                 =>  'hour',
+                60                      =>  'minute',
+                1                       =>  'second'
+                );
+
+    foreach ($a as $secs => $str)
+    {
+        $d = $etime / $secs;
+        if ($d >= 1)
+        {
+            $r = round($d);
+            return $r . ' ' . $str . ($r > 1 ? 's' : '') . ' ago';
+        }
+    }
+}
+
 require_once('TwitterAPIExchange.php');
 
 include('config.php');
@@ -55,9 +83,9 @@ if (is_numeric($_GET['id'])) {
             $url = get_isgd_url($url);
         }
         if (isset($_GET['timestamp'])) {
-            $ts = " ".$data->created_at;
+            $ts = " ".time_elapsed_string(strtotime($data->created_at));
         }
-        echo $realname." (@".$username."): \"".$text."\" ".$url.$ts;
+        echo $realname." (@".$username."): \"".$text."\"".$ts." ".$url;
     } else if (array_key_exists("errors", $data)) {
         echo "Error on response: ".$data->errors[0]->message;
     } else {
@@ -97,9 +125,9 @@ if (is_numeric($_GET['id'])) {
             $url = get_isgd_url($url);
         }
         if (isset($_GET['timestamp'])) {
-            $ts = " ".$data->created_at;
+            $ts = " ".time_elapsed_string(strtotime($data->created_at));
         }
-        echo $realname." (@".$username."): \"".$text."\" ".$url.$ts;
+        echo $realname." (@".$username."): \"".$text."\"".$ts." ".$url;
     } else if (array_key_exists("errors", $data)) {
         echo "Error on response: ".$data->errors[0]->message;
     } else {
