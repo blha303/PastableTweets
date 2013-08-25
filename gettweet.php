@@ -54,7 +54,10 @@ if (is_numeric($_GET['id'])) {
         if (!isset($_GET['longurl'])) {
             $url = get_isgd_url($url);
         }
-        echo $realname." (@".$username."): \"".$text."\" ".$url;
+        if (isset($_GET['timestamp'])) {
+            $ts = " ".$data->created_at;
+        }
+        echo $realname." (@".$username."): \"".$text."\" ".$url.$ts;
     } else if (array_key_exists("errors", $data)) {
         echo "Error on response: ".$data->errors[0]->message;
     } else {
@@ -93,7 +96,10 @@ if (is_numeric($_GET['id'])) {
         if (!isset($_GET['longurl'])) {
             $url = get_isgd_url($url);
         }
-        echo $realname." (@".$username."): \"".$text."\" ".$url;
+        if (isset($_GET['timestamp'])) {
+            $ts = " ".$data->created_at;
+        }
+        echo $realname." (@".$username."): \"".$text."\" ".$url.$ts;
     } else if (array_key_exists("errors", $data)) {
         echo "Error on response: ".$data->errors[0]->message;
     } else {
