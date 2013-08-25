@@ -10,11 +10,18 @@
 <meta property="og:description" content="An easy-to-use website for producing single-line plaintext versions of linked tweets.">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-function getTweet(url) {
+function getTweet(url, timestamp, longurl) {
  $('#outputbox').val("Loading...");
  var id = url.split("/").pop();
- if (id == "") { var id = url.slice(0, - 1).split("/").pop(); }
- $.get('gettweet.php?id=' + id, function(data) { $('#outputbox').val(data); $('#outputbox').select(); });
+ var query = "";
+ if (timestamp) {
+  query = query + "&timestamp";
+ }
+ if (longurl) {
+  query = query + "&longurl";
+ }
+ if (id == "") { id = url.slice(0, - 1).split("/").pop(); }
+ $.get('gettweet.php?id=' + id + query, function(data) { $('#outputbox').val(data); $('#outputbox').select(); });
 }
 </script>
 <title>Pastable Tweets</title>
@@ -29,9 +36,11 @@ We accept links in the forms:
 <li><b>https://twitter.com/blha303</b></ul>
 If you have any questions about this free service, please tweet at <a href="https://twitter.com/blha303">@blha303</a> or email <a href="mailto:pastabletweets@blha303.com.au">pastabletweets@blha303.com.au</a></p>
 
-<form method="GET" onsubmit="getTweet(document.getElementById('urlfield').value); return false;" action="gettweet.php">
+<form method="GET" onsubmit="getTweet(document.getElementById('urlfield').value, document.getElementById('timestamp').checked, document.getElementById('longurl').checked); return false;" action="gettweet.php">
 <input type="text" value="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size="67"> 
 <input type="submit" class="button button-green" value="Get tweet">
+<label for="timestamp">Timestamp</label><input type="checkbox" name="timestamp" id="timestamp" checked>
+<label for="longurl">Long URL</label><input type="checkbox" name="longurl" id="longurl">
 </form><br>
 <textarea readonly="readonly" id="outputbox" style="font-style: normal;" wrap="soft" cols="72" rows="6"></textarea>
 
