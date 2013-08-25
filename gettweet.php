@@ -1,8 +1,29 @@
 <?php
+
+// If passed a URL, don't freak out, calmly use the same method as
+// index.html's javascript to grab the last portion of it.
+if (sizeOf(explode("/", $_GET['id'])) >= 2) {
+    $temp = explode("/", $_GET['id']);
+    $id = array_pop($temp);
+    if ($id == "") {
+        $id = array_pop($temp);
+    }
+    $_GET['id'] = $id;
+}
+
+$cachefile = "cache/".escapeshellarg($_GET['id']).".html";
+
+if (file_exists($cachefile)) {
+    include($cachefile);
+    exit;
+}
+
+
 // Check for id param
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("No URL provided!");
 }
+
 // Necessary functions. These are from StackOverflow.
 function get_isgd_url($url)  
 {  
@@ -47,16 +68,6 @@ function time_elapsed_string($ptime)
     }
 }
 // End necessary functions
-// If passed a URL, don't freak out, calmly use the same method as
-// index.html's javascript to grab the last portion of it.
-if (sizeOf(explode("/", $_GET['id'])) >= 2) {
-    $temp = explode("/", $_GET['id']);
-    $id = array_pop($temp);
-    if ($id == "") {
-        $id = array_pop($temp);
-    }
-    $_GET['id'] = $id;
-}
 
 // Include the Twitter library.
 require_once('TwitterAPIExchange.php');
@@ -98,11 +109,14 @@ if (is_numeric($_GET['id'])) {
         if (isset($_GET['timestamp'])) {
             $ts = " ".time_elapsed_string(strtotime($data->created_at));
         }
+        ob_start();
         echo $realname." (@".$username."): \"".$text."\"".$ts." ".$url;
         // outputs 'Steven Smith (@blha303): "This is a tweet!" 2 hours ago http://is.gd/areallink'
     } else if (array_key_exists("errors", $data)) {
+        ob_start();
         echo "Error on response: ".$data->errors[0]->message;
     } else {
+        ob_start();
         echo "Unspecified error.";
     }
 } else {
@@ -119,6 +133,12 @@ if (is_numeric($_GET['id'])) {
         die("Error on response: ".$data->errors[0]->message);
     }
     $_GET['id'] = $data[0]->id_str;
+    
+    $cachefile = "cache/".escapeshellarg($_GET['id']).".html";
+    if (file_exists($cachefile)) {
+        include($cachefile);
+        exit;
+    }
 
     // Yes, this is the same code copied from above.
     $url = 'https://api.twitter.com/1.1/statuses/show.json';
@@ -142,13 +162,21 @@ if (is_numeric($_GET['id'])) {
         if (isset($_GET['timestamp'])) {
             $ts = " ".time_elapsed_string(strtotime($data->created_at));
         }
+        ob_start();
         echo $realname." (@".$username."): \"".$text."\"".$ts." ".$url;
     } else if (array_key_exists("errors", $data)) {
+        ob_start();
         echo "Error on response: ".$data->errors[0]->message;
     } else {
+        ob_start();
         echo "Unspecified error.";
     }
 }
+
+$fp = fopen($cachefile, 'w');
+fwrite($fp, ob_get_contents());
+fclose($fp);
+ob_end_flush();
 
 // Thanks for reading this. Join irc.esper.net #blha303 and let me know you 
 // got this far. :)
