@@ -70,6 +70,9 @@ if (is_numeric($_GET['id'])) {
                         ->performRequest();
 
     $data = json_decode($response);
+    if (array_key_exists("errors", $data)) {
+        die("Error on response: ".$data->errors[0]->message);
+    }
     $_GET['id'] = $data[0]->id_str;
 
     $url = 'https://api.twitter.com/1.1/statuses/show.json';
