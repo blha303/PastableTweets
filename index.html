@@ -26,23 +26,24 @@ function getTweet(url, timestamp, longurl) {
 </script>
 <title>Pastable Tweets</title>
 </head>
-<body onload="$('#urlfield').select();"><a href="https://github.com/blha303/PastableTweets"><img alt="Fork me on GitHub" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" style="position: absolute; top: 0; right: 0; border: 0;"></a>
+<body onload="if (window.location.hash) { $('#urlfield').val(window.location.hash.substring(1)); getTweet(document.getElementById('urlfield').value, document.getElementById('timestamp').checked, document.getElementById('longurl').checked); }; $('#urlfield').select();"><a href="https://github.com/blha303/PastableTweets"><img alt="Fork me on GitHub" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" style="position: absolute; top: 0; right: 0; border: 0;"></a>
 <div id="container">
 <h1>Pastable Tweets!</h1>
-<p>Paste a direct link to a tweet in the box, hit Enter, then copy the text from the text area below it. 
-We accept links in the forms:
-<ul><li><b>https://twitter.com/blha303/status/371281788770844673</b>
-<li><b>371281788770844673</b>
-<li><b>https://twitter.com/blha303</b></ul>
-If you have any questions about this free service, please tweet at <a href="https://twitter.com/blha303">@blha303</a> or email <a href="mailto:pastabletweets@blha303.com.au">pastabletweets@blha303.com.au</a></p>
-
 <form method="GET" onsubmit="getTweet(document.getElementById('urlfield').value, document.getElementById('timestamp').checked, document.getElementById('longurl').checked); return false;" action="gettweet.php">
 <input type="text" value="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size="67"> 
 <input type="submit" class="button button-green" value="Get tweet">
 <label for="timestamp">Timestamp</label><input type="checkbox" name="timestamp" id="timestamp" checked>
 <label for="longurl">Long URL</label><input type="checkbox" name="longurl" id="longurl">
 </form><br>
-<textarea readonly="readonly" id="outputbox" style="font-style: normal; margin: 2px; height: 96px; width: 593px;" wrap="soft"></textarea>
+<textarea readonly="readonly" id="outputbox" style="font-style: normal; margin: 2px; height: 96px; width: 593px;" wrap="soft" onClick="$(this).select();"></textarea>
+<p>Paste a direct link to a tweet in the box, hit Enter, then copy the text from the text area below it. 
+We accept links in the forms:
+<ul><li><b>https://twitter.com/blha303/status/371281788770844673</b>
+<li><b>371281788770844673</b>
+<li><b>https://twitter.com/blha303</b></ul>
+We now also have a bookmarklet! Drag this link to your bookmarks/favorites, and click on it on any Twitter page: <a href="javascript: (function () { window.open('http://pastabletweets.pw/#' + window.location.href); })()">PastableTweets</a></p>
+<p>If you have any questions about this free service, please tweet at <a href="https://twitter.com/blha303">@blha303</a> or email <a href="mailto:pastabletweets@blha303.com.au">pastabletweets@blha303.com.au</a></p>
+
 
 
 </div>
