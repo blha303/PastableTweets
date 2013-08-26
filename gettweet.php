@@ -31,10 +31,9 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("No URL provided!");
 }
 
-// Necessary functions. These are from StackOverflow.
+// Functions from StackOverflow
 function get_isgd_url($url)
 {
-    //get content
     $ch      = curl_init();
     $timeout = 5;
     curl_setopt($ch, CURLOPT_URL, 'http://is.gd/api.php?longurl=' . $url);
@@ -42,15 +41,12 @@ function get_isgd_url($url)
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
     $content = curl_exec($ch);
     curl_close($ch);
-    
-    //return the data
     return $content;
 }
 
 function time_elapsed_string($ptime)
 {
     $etime = time() - $ptime;
-    
     if ($etime < 1) {
         return '0 seconds';
     }
@@ -72,7 +68,7 @@ function time_elapsed_string($ptime)
         }
     }
 }
-// End necessary functions
+// End StackOverflow functions
 
 // Include the Twitter library.
 require_once('TwitterAPIExchange.php');
@@ -99,7 +95,6 @@ if (is_numeric($_GET['id'])) {
     $response = $twitter->setGetfield($getfield)->buildOauth($url, $requestMethod)->performRequest();
     
     $data = json_decode($response);
-    //echo $response;
     if (array_key_exists("user", $data)) {
         $username = $data->user->screen_name;
         $realname = $data->user->name;
@@ -155,7 +150,6 @@ if (is_numeric($_GET['id'])) {
     $response = $twitter->setGetfield($getfield)->buildOauth($url, $requestMethod)->performRequest();
     
     $data = json_decode($response);
-    //echo $response;
     if (array_key_exists("user", $data)) {
         $username = $data->user->screen_name;
         $realname = $data->user->name;
@@ -182,7 +176,4 @@ $fp = fopen($cachefile, 'w');
 fwrite($fp, ob_get_contents());
 fclose($fp);
 ob_end_flush();
-
-// Thanks for reading this. Join irc.esper.net #blha303 and let me know you
-// got this far. :)
 ?>
