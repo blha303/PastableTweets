@@ -13,10 +13,10 @@ if (sizeOf(explode("/", $_GET['id'])) >= 2) {
 
 $shellarg = escapeshellarg($_GET['id']);
 if (isset($_GET['timestamp'])) {
-    $shellarg = $shellarg + "-timestamp";
+    $shellarg = $shellarg . "-timestamp";
 }
 if (isset($_GET['longurl'])) {
-    $shellarg = $shellarg + "-longurl";
+    $shellarg = $shellarg . "-longurl";
 }
 $cachefile = "cache/" . $shellarg . ".html";
 
@@ -136,10 +136,10 @@ if (is_numeric($_GET['id'])) {
     
     $shellarg = escapeshellarg($_GET['id']);
     if (isset($_GET['timestamp'])) {
-        $shellarg = $shellarg + "-timestamp";
+        $shellarg = $shellarg . "-timestamp";
     }
     if (isset($_GET['longurl'])) {
-        $shellarg = $shellarg + "-longurl";
+        $shellarg = $shellarg . "-longurl";
     }
     $cachefile = "cache/" . $shellarg . ".html";
     if (file_exists($cachefile)) {
