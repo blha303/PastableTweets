@@ -11,26 +11,33 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 function getTweet(url, timestamp, longurl) {
- $('#outputbox').val("Loading...");
- var id = url.split("/").pop();
- var query = "";
- if (timestamp) {
-  query = query + "&timestamp";
- }
- if (longurl) {
-  query = query + "&longurl";
- }
- if (id == "") { id = url.slice(0, - 1).split("/").pop(); }
- $.get('gettweet.php?id=' + id + query, function(data) { $('#outputbox').val(data); $('#outputbox').select(); });
+    $('#outputbox').val("Loading...");
+    if (url == "http://pastabletweets.pw/") {
+        $('#outputbox').val("Invalid URL!");
+    } else {
+        var id = url.split("/").pop();
+        var query = "";
+        if (timestamp) {
+            query = query + "&timestamp";
+        }
+        if (longurl) {
+            query = query + "&longurl";
+        }
+        if (id == "") {
+            id = url.slice(0, - 1).split("/").pop();
+        }
+        $.get('gettweet.php?id=' + id + query, function(data) { $('#outputbox').val(data); $('#outputbox').select(); });
+    }
 }
 </script>
 <title>Pastable Tweets</title>
 </head>
 <body onload="if (window.location.hash) { $('#urlfield').val(window.location.hash.substring(1)); getTweet(document.getElementById('urlfield').value, document.getElementById('timestamp').checked, document.getElementById('longurl').checked); }; $('#urlfield').select();"><a href="https://github.com/blha303/PastableTweets"><img alt="Fork me on GitHub" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" style="position: absolute; top: 0; right: 0; border: 0;"></a>
+
 <div id="container">
 <h1>Pastable Tweets!</h1>
 <form method="GET" onsubmit="getTweet(document.getElementById('urlfield').value, document.getElementById('timestamp').checked, document.getElementById('longurl').checked); return false;" action="gettweet.php">
-<input type="text" value="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size="67"> 
+<input type="text" placeholder="https://twitter.com/blha303/status/371281788770844673" name="url" id="urlfield" size="67"> 
 <input type="submit" class="button button-green" value="Get tweet">
 <label for="timestamp">Timestamp</label><input type="checkbox" name="timestamp" id="timestamp" checked>
 <label for="longurl">Long URL</label><input type="checkbox" name="longurl" id="longurl">
@@ -44,7 +51,20 @@ We accept links in the forms:
 We now also have a bookmarklet! Drag this link to your bookmarks/favorites, and click on it on any Twitter page: <a href="javascript: (function () { window.open('http://pastabletweets.pw/#' + window.location.href); })()">PastableTweets</a></p>
 <p>If you have any questions about this free service, please tweet at <a href="https://twitter.com/blha303">@blha303</a> or email <a href="mailto:pastabletweets@blha303.com.au">pastabletweets@blha303.com.au</a></p>
 
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pastabletweets.pw" data-text="PastableTweets: Easy plaintext tweets for pasting on other social media sites or instant messaging." data-related="blha303" data-hashtags="PastableTweets">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
+<div style="float:right;padding:4px;">
+<b:if cond='data:post.isFirstPost'> 
+<script>(function(d){
+  var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+  js = d.createElement('script'); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  d.getElementsByTagName('head')[0].appendChild(js);
+}(document));</script>
+</b:if> 
+<fb:share-button expr:href='data:post.url' type='button_count'/>  
+</div>
 
 </div>
 
